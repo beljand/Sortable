@@ -679,7 +679,7 @@ var PluginManager = {
       }
     }
 
-    if (!!~plugins.indexOf(plugin)) {
+    if (!~plugins.indexOf(plugin)) {
       plugins.push(plugin);
     }
   },

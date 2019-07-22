@@ -12,7 +12,7 @@ export default {
 				plugin[option] = defaults[option];
 			}
 		}
-		if(!!~plugins.indexOf(plugin)) {
+		if(!~plugins.indexOf(plugin)) {
 			plugins.push(plugin);
 		}
 	},
