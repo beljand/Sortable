@@ -786,7 +786,9 @@
         }
       }
 
-      if (!~plugins.indexOf(plugin)) {
+      if (!plugins.map(function (p) {
+        return p.name;
+      }).includes(plugin.name)) {
         plugins.push(plugin);
       }
     },
