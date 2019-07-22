@@ -786,7 +786,9 @@
         }
       }
 
-      plugins.push(plugin);
+      if (!!~plugins.indexOf(plugin)) {
+        plugins.push(plugin);
+      }
     },
     pluginEvent: function pluginEvent(eventName, sortable, evt) {
       var _this = this;
@@ -1032,7 +1034,7 @@
       return elCSS.gridTemplateColumns.split(' ').length <= 1 ? 'vertical' : 'horizontal';
     }
 
-    if (child1 && firstChildCSS["float"] !== 'none') {
+    if (child1 && firstChildCSS["float"] && firstChildCSS["float"] !== 'none') {
       var touchingSideChild2 = firstChildCSS["float"] === 'left' ? 'left' : 'right';
       return child2 && (secondChildCSS.clear === 'both' || secondChildCSS.clear === touchingSideChild2) ? 'vertical' : 'horizontal';
     }
@@ -1286,7 +1288,7 @@
           options = this.options,
           preventOnFilter = options.preventOnFilter,
           type = evt.type,
-          touch = evt.touches && evt.touches[0],
+          touch = evt.touches && evt.touches[0] || evt.pointerType && evt.pointerType === 'touch' && evt,
           target = (touch || evt).target,
           originalTarget = evt.target.shadowRoot && (evt.path && evt.path[0] || evt.composedPath && evt.composedPath()[0]) || target,
           filter = options.filter;
@@ -2548,8 +2550,8 @@
     var idx = inputs.length;
 
     while (idx--) {
-      var _el = inputs[idx];
-      _el.checked && savedInputChecked.push(_el);
+      var el = inputs[idx];
+      el.checked && savedInputChecked.push(el);
     }
   }
 
@@ -2588,9 +2590,19 @@
     getChild: getChild
   };
   /**
+   * Get the Sortable instance of an element
+   * @param  {HTMLElement} element The element
+   * @return {Sortable|undefined}         The instance of Sortable
+   */
+
+  Sortable.get = function (element) {
+    return element[expando];
+  };
+  /**
    * Mount a plugin to Sortable
    * @param  {...SortablePlugin|SortablePlugin[]} plugins       Plugins being mounted
    */
+
 
   Sortable.mount = function () {
     for (var _len = arguments.length, plugins = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -2600,7 +2612,7 @@
     if (plugins[0].constructor === Array) plugins = plugins[0];
     plugins.forEach(function (plugin) {
       if (!plugin.prototype || !plugin.prototype.constructor) {
-        throw "Sortable: Mounted plugin must be a constructor function, not ".concat({}.toString.call(el));
+        throw "Sortable: Mounted plugin must be a constructor function, not ".concat({}.toString.call(plugin));
       }
 
       if (plugin.utils) Sortable.utils = _objectSpread({}, Sortable.utils, plugin.utils);
@@ -2693,8 +2705,8 @@
       _handleAutoScroll: function _handleAutoScroll(evt, fallback) {
         var _this = this;
 
-        var x = evt.clientX,
-            y = evt.clientY,
+        var x = (evt.touches ? evt.touches[0] : evt).clientX,
+            y = (evt.touches ? evt.touches[0] : evt).clientY,
             elem = document.elementFromPoint(x, y);
         touchEvt$1 = evt; // IE does not seem to have native autoscroll,
         // Edge's autoscroll seems too conditional,
@@ -2753,7 +2765,9 @@
   var autoScroll = throttle(function (evt, options, rootEl, isFallback) {
     // Bug: https://bugzilla.mozilla.org/show_bug.cgi?id=505521
     if (!options.scroll) return;
-    var sens = options.scrollSensitivity,
+    var x = (evt.touches ? evt.touches[0] : evt).clientX,
+        y = (evt.touches ? evt.touches[0] : evt).clientY,
+        sens = options.scrollSensitivity,
         speed = options.scrollSpeed,
         winScroller = getWindowScrollingElement();
     var scrollThisInstance = false,
@@ -2798,8 +2812,8 @@
         canScrollY = height < scrollHeight && (elCSS.overflowY === 'auto' || elCSS.overflowY === 'scroll');
       }
 
-      var vx = canScrollX && (Math.abs(right - evt.clientX) <= sens && scrollPosX + width < scrollWidth) - (Math.abs(left - evt.clientX) <= sens && !!scrollPosX);
-      var vy = canScrollY && (Math.abs(bottom - evt.clientY) <= sens && scrollPosY + height < scrollHeight) - (Math.abs(top - evt.clientY) <= sens && !!scrollPosY);
+      var vx = canScrollX && (Math.abs(right - x) <= sens && scrollPosX + width < scrollWidth) - (Math.abs(left - x) <= sens && !!scrollPosX);
+      var vy = canScrollY && (Math.abs(bottom - y) <= sens && scrollPosY + height < scrollHeight) - (Math.abs(top - y) <= sens && !!scrollPosY);
 
       if (!autoScrolls[layersOut]) {
         for (var i = 0; i <= layersOut; i++) {
