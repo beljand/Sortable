@@ -6,6 +6,6 @@ const banner = `/*! Sortable ${ package.version } - ${ package.license } | ${ pa
 
 fs.writeFileSync(
 	`./Sortable.min.js`,
-	banner + UglifyJS.minify(fs.readFileSync(`./Sortable.js`, 'utf8')).code,
+	banner + UglifyJS.minify(fs.readFileSync(`./Sortable.js`, 'utf8'), {mangle: false}).code,
 	'utf8'
 );
