@@ -786,9 +786,11 @@
         }
       }
 
+      var pluginName = plugin.name || plugin.pluginName;
+
       if (!plugins.map(function (p) {
-        return p.name;
-      }).includes(plugin.name)) {
+        return p.name || p.pluginName;
+      }).includes(pluginName)) {
         plugins.push(plugin);
       }
     },

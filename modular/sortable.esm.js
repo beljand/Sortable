@@ -679,7 +679,9 @@ var PluginManager = {
       }
     }
 
-    if (!plugins.map(p => p.name).includes(plugin.name)) {
+    let pluginName = plugin.name || plugin.pluginName;
+
+    if (!plugins.map(p => p.name || p.pluginName).includes(pluginName)) {
       plugins.push(plugin);
     }
   },
