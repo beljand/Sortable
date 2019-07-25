@@ -12,8 +12,8 @@ export default {
 				plugin[option] = defaults[option];
 			}
 		}
-		let pluginName = plugin.name||plugin.pluginName;
-		if(!plugins.map(p => p.name || p.pluginName).includes(pluginName)) {
+		let pluginName = plugin.pluginName;
+		if(!plugins.map(p => p.pluginName).includes(pluginName)) {
 			plugins.push(plugin);
 		}
 	},

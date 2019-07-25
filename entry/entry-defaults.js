@@ -6,7 +6,7 @@ import Swap from '../plugins/Swap';
 import MultiDrag from '../plugins/MultiDrag';
 
 Sortable.mount(new AutoScroll());
-Sortable.mount(RemoveOnSpill, RevertOnSpill);
+Sortable.mount(RemoveOnSpill, RevertOnSpill, new MultiDrag);
 
 export default Sortable;
 

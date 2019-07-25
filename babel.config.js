@@ -8,7 +8,9 @@ module.exports = function(api) {
 			[
 				"@babel/preset-env",
 				{
-					"modules": false
+					"modules": false,
+					"mangle": false,
+					"noMangle": true
 				}
 			]
 		];

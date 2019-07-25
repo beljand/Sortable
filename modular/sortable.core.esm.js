@@ -679,9 +679,9 @@ var PluginManager = {
       }
     }
 
-    let pluginName = plugin.name || plugin.pluginName;
+    let pluginName = plugin.pluginName;
 
-    if (!plugins.map(p => p.name || p.pluginName).includes(pluginName)) {
+    if (!plugins.map(p => p.pluginName).includes(pluginName)) {
       plugins.push(plugin);
     }
   },

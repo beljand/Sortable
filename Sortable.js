@@ -786,10 +786,10 @@
         }
       }
 
-      var pluginName = plugin.name || plugin.pluginName;
+      var pluginName = plugin.pluginName;
 
       if (!plugins.map(function (p) {
-        return p.name || p.pluginName;
+        return p.pluginName;
       }).includes(pluginName)) {
         plugins.push(plugin);
       }
@@ -3625,7 +3625,7 @@
   }
 
   Sortable.mount(new AutoScrollPlugin());
-  Sortable.mount(Remove, Revert);
+  Sortable.mount(Remove, Revert, new MultiDragPlugin());
 
   Sortable.mount(new SwapPlugin());
   Sortable.mount(new MultiDragPlugin());
