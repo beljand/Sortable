@@ -466,6 +466,9 @@ function MultiDragPlugin() {
 		},
 
 		_deselectMultiDrag(evt) {
+			
+			if(this.multiDragKeyDown) return;
+
 			if (dragStarted) return;
 
 			// Only deselect if selection is in this sortable
@@ -492,7 +495,7 @@ function MultiDragPlugin() {
 		},
 
 		_checkKeyDown(evt) {
-			if (evt.key === this.sortable.options.multiDragKey || evt.key === this.sortable.options.multiDragKey.includes(evt.key)) {
+			if (evt.key === this.sortable.options.multiDragKey || this.sortable.options.multiDragKey.includes(evt.key)) {
 				this.multiDragKeyDown = true;
 			}
 		},
