@@ -567,13 +567,25 @@ function MultiDragPlugin() {
 		},
 		optionListeners: {
 			multiDragKey(key) {
-				key = key.toLowerCase();
-				if (key === 'ctrl') {
-					key = 'Control';
-				} else if (key.length > 1) {
-					key = key.charAt(0).toUpperCase() + key.substr(1);
+				if (typeof key === 'string') {
+					key = key.toLowerCase();
+					if (key === 'ctrl') {
+						key = 'Control';
+					} else if (key.length > 1) {
+						key = key.charAt(0).toUpperCase() + key.substr(1);
+					}
+					return key;
+				} else {
+					key.map((s) => {
+						s = s.toLowerCase();
+						if (s === 'ctrl') {
+							s = 'Control';
+						} else if (s.length > 1) {
+							s = s.charAt(0).toUpperCase() + s.substr(1);
+						}
+						return s;
+					})
 				}
-				return key;
 			}
 		}
 	});
